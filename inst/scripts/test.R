@@ -4,7 +4,7 @@ test <- read_csv("inst/extdata/example.csv", skip = 2)
 
 test |>
   select(distance = "Distances (m)", hr = "HR (bpm)") |>
-  filter(distance != 0) |>
+  filter(distance != 0) |> # Prevent line coming up from zero while waiting for movement
   ggplot(aes(x = distance, y = hr)) +
   geom_line() +
   ggridges::theme_ridges() +
