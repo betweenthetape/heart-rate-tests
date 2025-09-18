@@ -12,3 +12,5 @@ test |>
   labs(x = "Distance (Km)", y = "Heart Rate (bpm)")
 
 # Add hlines on key points of the trail. Use GPS/distance via map to identify where these key points are.
+# Calculate how long in each training zone.
+# Show mean, min, max, summaries
