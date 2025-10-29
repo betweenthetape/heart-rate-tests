@@ -56,7 +56,7 @@ plot_ebike <- raw |>
   geom_hline(aes(yintercept = 130), linetype = "dashed") +
   ggridges::theme_ridges() +
   labs(
-    title = "Using the ebike, heart rate remained mostly below 130 BPM",
+    title = "Using the e-bike, heart rate remained mostly below 130 BPM",
     x = "Distance (Km)",
     y = "Heart Rate (bpm)"
   )
@@ -104,10 +104,21 @@ plot_both <- raw |>
   ggridges::theme_ridges() +
   theme(legend.position = "none") +
   labs(
-    title = "Normal bike vs. ebike",
+    title = "Normal bike vs. e-bike",
     x = "Distance (Km)",
     y = "Heart Rate (bpm)"
   )
+
+ggsave(
+  "inst/scripts/assets/plot_both.png",
+  plot = plot_both,
+  width = 2200,
+  height = 1800,
+  units = "px",
+  bg = "white",
+  limitsize = FALSE,
+  dpi = 330
+)
 
 ggsave(
   "inst/scripts/assets/plot_transparent_both.png",
@@ -131,6 +142,7 @@ table_threshold <- threshold |>
     distance_below_threshold = sum(gap * below_threshold) / 1000,
     .by = type
   ) |>
+  mutate(type = if_else(type == "ebike", "e-bike", "bike")) |>
   gt(rowname_col = "type") |>
   opt_row_striping() |>
   tab_options(
@@ -153,7 +165,7 @@ table_threshold <- threshold |>
   ) |>
   tab_header(
     md(
-      "Twice as much time was spent above the zone 2 (130 BPM)<br>threshold on the normal bike compared to the ebike"
+      "Twice as much time was spent above the zone 2 (130 BPM)<br>threshold on the normal bike compared to the e-bike"
     )
   ) |>
   tab_style(
@@ -162,7 +174,7 @@ table_threshold <- threshold |>
   ) |>
   tab_style(
     style = cell_text(color = "#ffb10c", weight = "bold"),
-    locations = cells_stub(rows = type == "ebike")
+    locations = cells_stub(rows = type == "e-bike")
   )
 
 gtsave(
